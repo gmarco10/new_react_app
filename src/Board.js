@@ -1,8 +1,6 @@
 import React from 'react';
 import SquareExtern  from './Square';
 
-// import './index.css';
-
 const Board = (props) => {
   // Check that, in react inspector, Square component is named as Square instead of SquareExtern
   const renderSquare = (i) => {
