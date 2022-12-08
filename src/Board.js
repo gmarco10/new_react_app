@@ -10,12 +10,20 @@ const Board = (props) => {
           />
   }
 
+  const SquarePersonalized = (params) => {
+    let index = params['i']
+    return <SquareExtern
+            value={props.squares[index]}
+            onClick={() => props.onClick(index)}
+          />
+  }
+
   return (
     <div>
       <div className="board-row">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
+        <SquarePersonalized i={0} />
+        <SquarePersonalized i={1} />
+        <SquarePersonalized i={2} />
       </div>
       <div className="board-row">
         {renderSquare(3)}
