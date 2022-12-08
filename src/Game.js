@@ -5,6 +5,9 @@ import { Board } from './Board';
 class Game extends React.Component {
   constructor(props) {
     super(props);
+
+    this.playerOneInput = React.createRef();
+
     this.state = {
       history: [{
         squares: Array(9).fill(null),
@@ -38,6 +41,10 @@ class Game extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.playerOneInput.current.focus();
+  }
+
   render() {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[this.state.stepNumber];
@@ -62,6 +69,22 @@ class Game extends React.Component {
     }
     return (
       <div className="game">
+        <div className="players-info" >
+          <div className='player-one' >
+            <text>Player one: </text>
+            <input
+              type="text" 
+              ref={this.playerOneInput}
+            />
+          </div>
+          <div className='player-two' >
+            <text>Player two: </text>
+            <input
+              type="text" 
+            />
+          </div>
+        </div>
+
         <div className="game-board">
           <Board 
             squares={current.squares}
