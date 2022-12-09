@@ -42,7 +42,7 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    this.playerOneInput.current.focus();
+    this.playerOneInput.current && this.playerOneInput.current.focus()
   }
 
   render() {
