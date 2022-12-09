@@ -10,8 +10,9 @@ const Board = (props) => {
           />
   }
 
+  // Comentario, no es una funcion pura porque requiere del contenido de props (de Board)
   const SquarePersonalized = (params) => {
-    let index = params['i']
+    const index = params.i
     return <SquareExtern
             value={props.squares[index]}
             onClick={() => props.onClick(index)}
