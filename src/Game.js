@@ -38,11 +38,15 @@ class Game extends React.Component {
     });
   }
 
+  componentDidMount() {
+    alert('Welcome to this exiting game!')
+  }
+
   render() {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
-    
+
     const moves = history.map((step, move) => {
       const desc = move ?
       'Go to move #' + move :
@@ -63,7 +67,7 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board 
+          <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}/>
         </div>
