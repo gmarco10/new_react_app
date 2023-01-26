@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Board } from './Board';
 
@@ -8,6 +8,10 @@ function FunctionalGame() {
   const [history, setHistory] = useState([{ squares: squares }]);
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
+  const [clickCounter, setClickCounter] = useState(0);
+
+  useEffect(() => alert('Using effect: WELCOME TO THIS EXITING GAME'), []) // [] == no tiene dependencias, entonces solo se ejecuta la primera vez
+  useEffect(() => alert(`Its ${xIsNext ? 'X' : 'O'} turn`), [history, xIsNext])
 
   const handleClick = (i) => {
     const actualHistory = history.slice(0, stepNumber + 1);
@@ -25,6 +29,10 @@ function FunctionalGame() {
   const jumpTo = (step) => {
     setStepNumber(step);
     setXIsNext((step % 2) === 0)
+  }
+
+  const changeBackGround = () => {
+    alert('hola')
   }
 
   const actualHistory = history.slice(0, stepNumber + 1);
@@ -58,6 +66,10 @@ function FunctionalGame() {
       <div className="game-info">
         <div>{status}</div>
         <ol>{moves}</ol>
+      </div>
+      <div className="extra">
+        <div>Clicks: {clickCounter}</div>
+        <button onClick={() => setClickCounter(clickCounter + 1)}>Click me</button>
       </div>
     </div>
   );
