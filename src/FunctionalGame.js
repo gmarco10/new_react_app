@@ -11,7 +11,7 @@ function FunctionalGame() {
   const [clickCounter, setClickCounter] = useState(0);
 
   useEffect(() => alert('Using effect: WELCOME TO THIS EXITING GAME'), []) // [] == no tiene dependencias, entonces solo se ejecuta la primera vez
-  useEffect(() => alert(`Its ${xIsNext ? 'X' : 'O'} turn`), [history, xIsNext])
+  useEffect(() => alert(`Its ${xIsNext ? 'X' : 'O'} turn`), [stepNumber])
 
   const handleClick = (i) => {
     const actualHistory = history.slice(0, stepNumber + 1);
