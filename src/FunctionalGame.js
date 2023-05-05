@@ -1,9 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
+import {selectStepNumber} from './features/stepNumberSlice'
+import {switchTheme, selectTheme} from './features/themeSlice'
+
+import {moveToStep, selectSteps} from './features/historySlice'
+
 import { Board } from './Board';
+import { ReduxBoard } from './reduxGame/reduxBoard';
 import { ClickCounter } from './ClickCounter';
 
 function FunctionalGame({ specialRender }) {
+  const dispatch =  useDispatch();
+
+  const theme = useSelector(selectTheme)
+  const newStepNumber = useSelector(selectStepNumber);
+  const historyLength = useSelector(selectSteps);
 
   const squares = Array(9).fill(null);
   const [history, setHistory] = useState([{ squares: squares }]);
@@ -33,6 +45,7 @@ function FunctionalGame({ specialRender }) {
 
   const jumpTo = (step) => {
     setStepNumber(step);
+
     setXIsNext((step % 2) === 0)
   }
 
@@ -46,10 +59,25 @@ function FunctionalGame({ specialRender }) {
     'Go to game start';
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{desc}</button>
+        <button onClick={() => jumpTo(move) }>{desc}</button>
       </li>
     );
   });
+
+
+  const reduxMoves = [...Array(historyLength).keys()].map((step, move) => {
+    const desc = step === 0 ?
+    'Go to game start' :
+    'Go to move #' + step;
+    return (
+      <li key={move}>
+        <button onClick={() => dispatch(moveToStep(move))}>{desc}</button>
+      </li>
+    );
+  });
+
+
+  let gameClass = `game ${theme}`
 
   let status;
   if (winner) {
@@ -58,23 +86,43 @@ function FunctionalGame({ specialRender }) {
     status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
   return (
-    <div className="game">
-      <div className="game-board">
-        <Board
-          squares={current.squares}
-          onClick={ handleClick }/>
+    <div className={gameClass}>
+      <div className="left">
+        <div className="initialVersion">
+          <div className="game-board">
+            <Board
+              squares={current.squares}
+              onClick={(i) => handleClick(i)}/>
+          </div>
+          <div className="game-info">
+            <div>{status}</div>
+            <ol>{moves}</ol>
+          </div>
+          <div>
+            Not affected because its a param
+            { specialRender }
+          </div>
+          <div>
+            re-rendered because its a child
+            < ClickCounter />
+          </div>
+        </div>
+        <div className="reduxVersion">
+          <div className="game-board">
+            <ReduxBoard
+              squares={current.squares}
+              onClick={(i) => handleClick(i)}/>
+          </div>
+          <div className="game-info">
+            <ol>{reduxMoves}</ol>
+          </div>
+        </div>
       </div>
-      <div className="game-info">
-        <div>{status}</div>
-        <ol>{moves}</ol>
-      </div>
-      <div>
-        Not affected because its a param
-        { specialRender }
-      </div>
-      <div>
-        re-rendered because its a child
-        < ClickCounter />
+      <div className="right">
+        <div className="extra">
+          <div>Theme: {theme}</div>
+          <button onClick={() => {dispatch(switchTheme())}}>Change theme</button>
+        </div>
       </div>
     </div>
   );
