@@ -8,12 +8,13 @@ export const stepNumberSlice = createSlice({
   name: 'stepNumber',
   initialState,
   reducers: {
-    increment: (state, value) =>{ state.value += 1 }
+    increment: (state) =>{ state.value += 1 },
+    reset: (state, number) => { state.value = number.payload }
   }
 
 })
 
-export const { increment } = stepNumberSlice.actions;
+export const { increment, reset } = stepNumberSlice.actions;
 
 export const selectStepNumber = (state) => state.newStepNumber.value;
 

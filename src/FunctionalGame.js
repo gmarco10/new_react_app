@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {selectStepNumber} from './features/stepNumberSlice'
+import {selectStepNumber, reset} from './features/stepNumberSlice'
 import {switchTheme, selectTheme} from './features/themeSlice'
 
 import {moveToStep, selectSteps} from './features/historySlice'
@@ -64,6 +64,10 @@ function FunctionalGame({ specialRender }) {
     );
   });
 
+  const resetToStep = (move) => {
+    dispatch(moveToStep(move))
+    dispatch(reset(move))
+  }
 
   const reduxMoves = [...Array(historyLength).keys()].map((step, move) => {
     const desc = step === 0 ?
@@ -71,7 +75,7 @@ function FunctionalGame({ specialRender }) {
     'Go to move #' + step;
     return (
       <li key={move}>
-        <button onClick={() => dispatch(moveToStep(move))}>{desc}</button>
+        <button onClick={() => resetToStep(move)}>{desc}</button>
       </li>
     );
   });
