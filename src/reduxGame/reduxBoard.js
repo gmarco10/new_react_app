@@ -1,15 +1,14 @@
 import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {fillSquare, selectHistory, selectCurrentBoard} from '../features/historySlice'
-import {increment, selectStepNumber} from '../features/stepNumberSlice'
+import { fillSquare, selectCurrentBoard } from '../features/historySlice'
+import { increment } from '../features/stepNumberSlice'
 
 
 import SquareExtern  from '../Square';
 
 const ReduxBoard = (props) => {
   const dispatch = useDispatch();
-  const newHistory = useSelector(selectHistory);
   const currentBoard = useSelector(selectCurrentBoard);
 
 
