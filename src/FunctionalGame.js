@@ -1,21 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {selectStepNumber, reset} from './features/stepNumberSlice'
 import {switchTheme, selectTheme} from './features/themeSlice'
 
-import {moveToStep, selectSteps} from './features/historySlice'
-
 import { Board } from './Board';
-import { ReduxBoard } from './reduxGame/reduxBoard';
 import { ClickCounter } from './ClickCounter';
 
 function FunctionalGame({ specialRender }) {
   const dispatch =  useDispatch();
 
   const theme = useSelector(selectTheme)
-  const newStepNumber = useSelector(selectStepNumber);
-  const historyLength = useSelector(selectSteps);
 
   const squares = Array(9).fill(null);
   const [history, setHistory] = useState([{ squares: squares }]);
@@ -64,22 +58,6 @@ function FunctionalGame({ specialRender }) {
     );
   });
 
-  const resetToStep = (move) => {
-    dispatch(moveToStep(move))
-    dispatch(reset(move))
-  }
-
-  const reduxMoves = [...Array(historyLength).keys()].map((step, move) => {
-    const desc = step === 0 ?
-    'Go to game start' :
-    'Go to move #' + step;
-    return (
-      <li key={move}>
-        <button onClick={() => resetToStep(move)}>{desc}</button>
-      </li>
-    );
-  });
-
 
   let gameClass = `game ${theme}`
 
@@ -109,16 +87,6 @@ function FunctionalGame({ specialRender }) {
           <div>
             re-rendered because its a child
             < ClickCounter />
-          </div>
-        </div>
-        <div className="reduxVersion">
-          <div className="game-board">
-            <ReduxBoard
-              squares={current.squares}
-              onClick={(i) => handleClick(i)}/>
-          </div>
-          <div className="game-info">
-            <ol>{reduxMoves}</ol>
           </div>
         </div>
       </div>
