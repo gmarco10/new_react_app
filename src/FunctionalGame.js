@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Board } from './Board';
+import { ClickCounter } from './ClickCounter';
 
-function FunctionalGame() {
+function FunctionalGame({ specialRender }) {
 
   const squares = Array(9).fill(null);
   const [history, setHistory] = useState([{ squares: squares }]);
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
-  const [clickCounter, setClickCounter] = useState(0);
 
-  useEffect(() => alert('Using effect: WELCOME TO THIS EXITING GAME'), []) // [] == no tiene dependencias, entonces solo se ejecuta la primera vez
-  useEffect(() => alert(`Its ${xIsNext ? 'X' : 'O'} turn`), [stepNumber])
+  // useEffect(() => alert('Using effect: WELCOME TO THIS EXITING GAME'), []) // [] == no tiene dependencias, entonces solo se ejecuta la primera vez
+  // useEffect(() => alert(`Its ${xIsNext ? 'X' : 'O'} turn`), [stepNumber])
 
-  const handleClick = (i) => {
+  // porque lo genero como un callback? asi solo se ejecuta cuando las variables en [] se modifican
+  // asi evito la re-renderizacion innecesaria
+  // PREGUNTA: porque tengo que agregar stepNumber
+  // no es necesario agregar XIsNext
+  // PREGUNTA: en que momento React sabe que le estoy pasando un parametro
+  const handleClick = useCallback((i) => {
     const actualHistory = history.slice(0, stepNumber + 1);
     const current = actualHistory[ stepNumber ];
     const squares = current.squares.slice();
@@ -23,16 +28,12 @@ function FunctionalGame() {
     squares[i] = xIsNext ? 'X' : 'O';
     setHistory( actualHistory.concat([{ squares: squares }]));
     setStepNumber(actualHistory.length);
-    setXIsNext(!xIsNext);
-  }
+    setXIsNext(prev => !prev);
+  }, [history, stepNumber, xIsNext]);
 
   const jumpTo = (step) => {
     setStepNumber(step);
     setXIsNext((step % 2) === 0)
-  }
-
-  const changeBackGround = () => {
-    alert('hola')
   }
 
   const actualHistory = history.slice(0, stepNumber + 1);
@@ -61,15 +62,19 @@ function FunctionalGame() {
       <div className="game-board">
         <Board
           squares={current.squares}
-          onClick={(i) => handleClick(i)}/>
+          onClick={ handleClick }/>
       </div>
       <div className="game-info">
         <div>{status}</div>
         <ol>{moves}</ol>
       </div>
-      <div className="extra">
-        <div>Clicks: {clickCounter}</div>
-        <button onClick={() => setClickCounter(clickCounter + 1)}>Click me</button>
+      <div>
+        Not affected because its a param
+        { specialRender }
+      </div>
+      <div>
+        re-rendered because its a child
+        < ClickCounter />
       </div>
     </div>
   );
