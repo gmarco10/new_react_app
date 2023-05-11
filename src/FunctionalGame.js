@@ -28,8 +28,8 @@ function FunctionalGame({ specialRender }) {
     squares[i] = xIsNext ? 'X' : 'O';
     setHistory( actualHistory.concat([{ squares: squares }]));
     setStepNumber(actualHistory.length);
-    setXIsNext(!xIsNext);
-  }, [history, stepNumber]);
+    setXIsNext(prev => !prev);
+  }, [history, stepNumber, xIsNext]);
 
   const jumpTo = (step) => {
     setStepNumber(step);
