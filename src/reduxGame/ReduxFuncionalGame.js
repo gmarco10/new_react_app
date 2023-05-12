@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { reset } from '../features/stepNumberSlice'
-import {switchTheme, selectTheme} from '../features/themeSlice'
 
 import {moveToStep, selectSteps} from '../features/historySlice'
 

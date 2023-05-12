@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { Board } from './Board';
-import { ClickCounter } from './ClickCounter';
 
 function FunctionalGame({ specialRender }) {
   const squares = Array(9).fill(null);

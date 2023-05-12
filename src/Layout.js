@@ -1,8 +1,8 @@
 import React from 'react';
 
 
-import { useSelector, useDispatch } from 'react-redux';
-import {switchTheme, selectTheme} from './features/themeSlice'
+import { useSelector } from 'react-redux';
+import { selectTheme } from './features/themeSlice'
 
 function Layout({children, counterSection}, params) {
 
