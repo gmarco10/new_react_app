@@ -1,20 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {selectStepNumber, reset} from '../features/stepNumberSlice'
+import { reset } from '../features/stepNumberSlice'
 import {switchTheme, selectTheme} from '../features/themeSlice'
 
 import {moveToStep, selectSteps} from '../features/historySlice'
 
-import { Board } from '../Board';
 import { ReduxBoard } from './reduxBoard';
-import { ClickCounter } from '../ClickCounter';
 
 function ReduxFunctionalGame() {
   const dispatch =  useDispatch();
 
-  const theme = useSelector(selectTheme)
-  const newStepNumber = useSelector((state) => state.newHistory.value);
   const historyLength = useSelector(selectSteps);
 
   // porque lo genero como un callback? asi solo se ejecuta cuando las variables en [] se modifican
@@ -39,10 +35,8 @@ function ReduxFunctionalGame() {
     );
   });
 
-  let gameClass = `game ${theme}`
-
   return (
-    <div className={gameClass}>
+    <div className='game'>
       <div className="left">
         <div className="reduxVersion">
           <div className="game-board">
@@ -53,35 +47,8 @@ function ReduxFunctionalGame() {
           </div>
         </div>
       </div>
-      <div className="right">
-        <div className="extra">
-          <div>Theme: {theme}</div>
-          <button onClick={() => {dispatch(switchTheme())}}>Change theme</button>
-        </div>
-      </div>
     </div>
   );
-}
-
-
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
 }
 
 export { ReduxFunctionalGame };

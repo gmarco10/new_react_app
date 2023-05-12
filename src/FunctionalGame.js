@@ -1,16 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
-import {switchTheme, selectTheme} from './features/themeSlice'
-
 import { Board } from './Board';
 import { ClickCounter } from './ClickCounter';
 
 function FunctionalGame({ specialRender }) {
-  const dispatch =  useDispatch();
-
-  const theme = useSelector(selectTheme)
-
   const squares = Array(9).fill(null);
   const [history, setHistory] = useState([{ squares: squares }]);
   const [stepNumber, setStepNumber] = useState(0);
@@ -62,8 +55,6 @@ function FunctionalGame({ specialRender }) {
   });
 
 
-  let gameClass = `game ${theme}`
-
   let status;
   if (winner) {
     status = 'Winner '+ winner;
@@ -71,7 +62,7 @@ function FunctionalGame({ specialRender }) {
     status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
   return (
-    <div className={gameClass}>
+    <div className='game'>
       <div className="left">
         <div className="initialVersion">
           <div className="game-board">
@@ -83,20 +74,6 @@ function FunctionalGame({ specialRender }) {
             <div>{status}</div>
             <ol>{moves}</ol>
           </div>
-          <div>
-            Not affected because its a param
-            { specialRender }
-          </div>
-          <div>
-            re-rendered because its a child
-            < ClickCounter />
-          </div>
-        </div>
-      </div>
-      <div className="right">
-        <div className="extra">
-          <div>Theme: {theme}</div>
-          <button onClick={() => {dispatch(switchTheme())}}>Change theme</button>
         </div>
       </div>
     </div>

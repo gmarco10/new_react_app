@@ -44,12 +44,13 @@ ol, ul {
   left: 0;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .game {
-  left: 0;
   width: 100%;
-  height: 50%;
+  left: 0;
   padding: 20px;
   flex-direction: row;
   display: flex;
@@ -88,4 +89,21 @@ ol, ul {
 
 .reduxVersion {
   display: flex;
+}
+
+.principal {
+  width: 95%;
+}
+
+.layout-container{
+  height: 49.8%;
+  display: flex;
+  flex-direction: row;
+}
+
+.theme{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
