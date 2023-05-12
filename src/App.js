@@ -10,8 +10,6 @@ function App() {
 
   return(
     <div className='app'>
-      {/* hola
-      <ThemeManager/> */}
       <FunctionalGame specialRender={< ClickCounter />}/>
       <ReduxFunctionalGame specialRender={< ClickCounter />}/>
     </div>

@@ -14,7 +14,7 @@ function ReduxFunctionalGame() {
   const dispatch =  useDispatch();
 
   const theme = useSelector(selectTheme)
-  const newStepNumber = useSelector(selectStepNumber);
+  const newStepNumber = useSelector((state) => state.newHistory.value);
   const historyLength = useSelector(selectSteps);
 
   // porque lo genero como un callback? asi solo se ejecuta cuando las variables en [] se modifican
