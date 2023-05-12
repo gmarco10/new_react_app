@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { Board } from './Board';
-import { ClickCounter } from './ClickCounter';
 
 function FunctionalGame({ specialRender }) {
-
   const squares = Array(9).fill(null);
   const [history, setHistory] = useState([{ squares: squares }]);
   const [stepNumber, setStepNumber] = useState(0);
@@ -14,10 +12,13 @@ function FunctionalGame({ specialRender }) {
   // useEffect(() => alert(`Its ${xIsNext ? 'X' : 'O'} turn`), [stepNumber])
 
   // porque lo genero como un callback? asi solo se ejecuta cuando las variables en [] se modifican
-  // asi evito la re-renderizacion innecesaria
-  // PREGUNTA: porque tengo que agregar stepNumber
-  // no es necesario agregar XIsNext
+  // asi evito que se genere una instancia nueva de la funcion en cada vez que se re-renderiza el padre (a no ser que se cambian las props)
+  // PREGUNTA: porque tengo que agregar stepNumber?
+  // RESPUESTA: preciso indicar en el array de dependencias todas las variables que se definen afuera y se usan dentro (regla general)
+
   // PREGUNTA: en que momento React sabe que le estoy pasando un parametro
+  // RESPUESTA: antes, solo se encapsulaba la funcion.
+
   const handleClick = useCallback((i) => {
     const actualHistory = history.slice(0, stepNumber + 1);
     const current = actualHistory[ stepNumber ];
@@ -33,6 +34,7 @@ function FunctionalGame({ specialRender }) {
 
   const jumpTo = (step) => {
     setStepNumber(step);
+
     setXIsNext((step % 2) === 0)
   }
 
@@ -46,10 +48,11 @@ function FunctionalGame({ specialRender }) {
     'Go to game start';
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{desc}</button>
+        <button onClick={() => jumpTo(move) }>{desc}</button>
       </li>
     );
   });
+
 
   let status;
   if (winner) {
@@ -58,23 +61,19 @@ function FunctionalGame({ specialRender }) {
     status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
   return (
-    <div className="game">
-      <div className="game-board">
-        <Board
-          squares={current.squares}
-          onClick={ handleClick }/>
-      </div>
-      <div className="game-info">
-        <div>{status}</div>
-        <ol>{moves}</ol>
-      </div>
-      <div>
-        Not affected because its a param
-        { specialRender }
-      </div>
-      <div>
-        re-rendered because its a child
-        < ClickCounter />
+    <div className='game'>
+      <div className="left">
+        <div className="initialVersion">
+          <div className="game-board">
+            <Board
+              squares={current.squares}
+              onClick={handleClick}/>
+          </div>
+          <div className="game-info">
+            <div>{status}</div>
+            <ol>{moves}</ol>
+          </div>
+        </div>
       </div>
     </div>
   );

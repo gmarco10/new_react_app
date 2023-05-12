@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {selectTheme} from './features/themeSlice'
-import { useSelector, useDispatch } from 'react-redux';
+import { selectTheme } from '../features/themeSlice'
+import { useSelector } from 'react-redux';
 
 function Square(props){
   const theme = useSelector(selectTheme)
