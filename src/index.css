@@ -38,6 +38,14 @@ ol, ul {
   background: #ddd;
 }
 
+.app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
 .game {
   /* position: fixed; */
   left: 0;

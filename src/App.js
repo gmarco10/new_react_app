@@ -9,9 +9,9 @@ import { ThemeManager } from './ThemeManager';
 function App() {
 
   return(
-    <div>
-      hola
-      <ThemeManager/>
+    <div className='app'>
+      {/* hola
+      <ThemeManager/> */}
       <FunctionalGame specialRender={< ClickCounter />}/>
       <ReduxFunctionalGame specialRender={< ClickCounter />}/>
     </div>
